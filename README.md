@@ -1,6 +1,6 @@
 # spring-oauth2-demo
 
-oauth2-使用示例
+spring-oauth2-使用示例
 
 ## 项目说明
 | 项目名称 | 项目说明 |端口 |
@@ -17,7 +17,7 @@ oauth2-使用示例
 ## 认证核心流程
 ### 获取token的主要流程
 
->详情请见：https://blog.csdn.net/bluuusea/article/details/80284458
+> 详情请见：https://blog.csdn.net/bluuusea/article/details/80284458
 
 1.用户发起获取token的请求。
 
@@ -40,6 +40,7 @@ oauth2-使用示例
 10.然后将OAuth2AccessToken对象包装进响应流返回。
 
 ### 刷新token（refresh token）的流程
+
 刷新token（refresh token）的流程与获取token的流程只有⑨有所区别：
 
 - 获取token调用的是AbstractTokenGranter中的getAccessToken方法，然后调用tokenStore中的getAccessToken方法获取token。
@@ -47,6 +48,7 @@ oauth2-使用示例
 - 刷新token调用的是RefreshTokenGranter中的getAccessToken方法，然后使用tokenStore中的refreshAccessToken方法获取token。
 
 ### tokenStore特点
+
 tokenStore通常情况为自定义实现，一般放置在缓存或者数据库中。此处可以利用自定义tokenStore来实现多种需求，如：
 
 - 同已用户每次获取token，获取到的都是同一个token，只有token失效后才会获取新token。
@@ -55,30 +57,22 @@ tokenStore通常情况为自定义实现，一般放置在缓存或者数据库�
 
 - 同一用户每次获取token都保证只有最后一个token能够使用，之前的token都设为无效（单点token）。
 
-### 授权模式 
-- 密码模式（resource owner password credentials）(为遗留系统设计)(支持refresh token)
+### 授权模式及应用范围 
 
-- 授权码模式（authorization code）(正宗方式)(支持refresh token)
+- 授权码模式 Authorization Code:用在服务端应用之间，正宗方式，支持refresh token。
 
-- 简化模式（implicit）(为web浏览器应用设计)(不支持refresh token)
+- 简化模式 Implicit:用在移动app或者web app(这些app是在用户的设备上的，如在手机上调起微信来进行认证授权)，不支持refresh token。
 
-- 客户端模式（client credentials）(为后台api服务消费者设计)(不支持refresh token)
+- 密码模式 Resource Owner Password Credentials(password):应用直接都是受信任的，为遗留系统设计，支持refresh token。
 
-### 应用范围
-
-- Authorization Code:用在服务端应用之间
-
-- Implicit:用在移动app或者web app(这些app是在用户的设备上的，如在手机上调起微信来进行认证授权)
-
-- Resource Owner Password Credentials(password):应用直接都是受信任的
-
-- Client Credentials:用在应用API访问。
+- 客户端模式 Client Credentials:用在应用API访问，为后台api服务消费者设计，不支持refresh token。
 
 
 ### Filter顺序
+
 Spring Security的官方文档向我们提供了filter的顺序，无论实际应用中你用到了哪些，整体的顺序是保持不变的：
 
-详情请见：https://blog.csdn.net/sinat_29899265/article/details/80747924
+> 详情请见：https://blog.csdn.net/sinat_29899265/article/details/80747924
 
 - ChannelProcessingFilter，重定向到其他协议的过滤器。也就是说如果你访问的channel错了，那首先就会在channel之间进行跳转，如http变为https。
 
@@ -106,5 +100,12 @@ Spring Security的官方文档向我们提供了filter的顺序，无论实际�
 
 
 - FilterSecurityInterceptor，保护Web URI，进行权限认证，并且在访问被拒绝时抛出异常。
+
+## TODO
+
+- 补充相关技术博客
+- 添加自定义控制
+- 添加JWT
+
 
  
