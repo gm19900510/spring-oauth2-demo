@@ -90,7 +90,7 @@ public class Oauth2ClientConfig {
 	@Bean
 	public RemoteTokenServices tokenService(ClientCredentialsResourceDetails details) {
 		RemoteTokenServices tokenService = new RemoteTokenServices();
-		tokenService.setCheckTokenEndpointUrl(details.getAccessTokenUri());
+		tokenService.setCheckTokenEndpointUrl(checkTokenUrl);
 		tokenService.setClientId(details.getClientId());
 		tokenService.setClientSecret(details.getClientSecret());
 		return tokenService;

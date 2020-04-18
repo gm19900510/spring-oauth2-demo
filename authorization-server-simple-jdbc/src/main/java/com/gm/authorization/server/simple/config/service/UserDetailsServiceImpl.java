@@ -48,7 +48,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		User myUser = new User(sysUser.getUsername(), passwordEncoder.encode(sysUser.getPassword()), authorityList);
 
-		log.info("用户存在 - {}", JSON.toJSONString(myUser));
+		log.info("用户存在:  {}", JSON.toJSONString(myUser));
 
 		return myUser;
 	}
